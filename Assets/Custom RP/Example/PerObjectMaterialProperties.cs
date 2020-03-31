@@ -1,18 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class PerObjectMaterialProperties : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
+[DisallowMultipleComponent]
+public class PerObjectMaterialProperties : MonoBehaviour {
+	
+	// ReSharper disable once InconsistentNaming
+	static int baseColorId = Shader.PropertyToID("_BaseColor");
+	private static MaterialPropertyBlock block;
+	
+    [SerializeField] private Color baseColor = Color.white;
+
+    private void OnValidate()
     {
-        
+	    if (block == null)
+	    {
+		    block = new MaterialPropertyBlock();
+	    }
+	    block.SetColor(baseColorId, baseColor);
+	    GetComponent<Renderer>().SetPropertyBlock(block);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+	    OnValidate();
     }
 }

@@ -25,4 +25,6 @@
         }
 
     }
+    
+    CustomEditor "CustomShaderGUI"
 } 

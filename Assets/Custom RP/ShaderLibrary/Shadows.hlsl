@@ -12,6 +12,7 @@ CBUFFER_START(_CustomShadows)
 	int _CascadeCount;
 	float4 _CascadeCullingSpheres[MAX_CASCADE_COUNT];
 	float4x4 _DirectionalShadowMatrices[MAX_SHADOWED_DIRECTIONAL_LIGHT_COUNT * MAX_CASCADE_COUNT];
+	float _ShadowDistance;
 CBUFFER_END
 
 struct DirectionalShadowData {
@@ -21,10 +22,12 @@ struct DirectionalShadowData {
 
 struct ShadowData {
 	int cascadeIndex;
+	float strength;
 };
 
 ShadowData GetShadowData (Surface surfaceWS) {
 	ShadowData data;
+	data.strength = surfaceWS.depth < _ShadowDistance ? 1.0 : 0.0;
 	int i;
 	for (i = 0; i < _CascadeCount; i++) {
 		float4 sphere = _CascadeCullingSpheres[i];
@@ -32,6 +35,10 @@ ShadowData GetShadowData (Surface surfaceWS) {
 		if (distanceSqr < sphere.w) {
 			break;
 		}
+	}
+	
+	if (i == _CascadeCount) {
+	    data.strength = 0.0;
 	}
 	data.cascadeIndex = i;
 	return data;

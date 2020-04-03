@@ -38,7 +38,7 @@ Varyings ShadowCasterPassVertex (Attributes input) { //: SV_POSITION {
 	return output;
 }
 
-void LitPassFragment (Varyings input) {
+void ShadowCasterPassFragment (Varyings input) {
 	UNITY_SETUP_INSTANCE_ID(input);
 	float4 baseMap = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.baseUV);
 	float4 baseColor = UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial, _BaseColor);

@@ -106,9 +106,12 @@ public partial class CameraRenderer {
     }
 
     private bool Cull (float maxShadowDistance) {
-        if (!camera.TryGetCullingParameters(out ScriptableCullingParameters p)) return false;
-        p.shadowDistance = Mathf.Min(maxShadowDistance, camera.farClipPlane);
-        cullingResults = context.Cull(ref p);
-        return true;
+        if (camera.TryGetCullingParameters(out ScriptableCullingParameters p))
+        {
+            p.shadowDistance = Mathf.Min(maxShadowDistance, camera.farClipPlane);
+            cullingResults = context.Cull(ref p);
+            return true;
+        }
+        return false;
     }
 }

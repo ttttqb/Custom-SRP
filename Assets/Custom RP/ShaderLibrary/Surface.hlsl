@@ -2,7 +2,7 @@
 #define CUSTOM_SURFACE_INCLUDED
 
 struct Surface {
-    float3 position;
+	float3 position;
 	float3 normal;
 	float3 viewDirection;
 	float depth;
@@ -10,6 +10,7 @@ struct Surface {
 	float alpha;
 	float metallic;
 	float smoothness;
+	float dither;
 };
 
 #endif
